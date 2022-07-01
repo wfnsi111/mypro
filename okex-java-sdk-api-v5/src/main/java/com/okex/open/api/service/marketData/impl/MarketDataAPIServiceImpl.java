@@ -1,9 +1,13 @@
 package com.okex.open.api.service.marketData.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.okex.open.api.bean.market.result.BinanceCandlestick;
 import com.okex.open.api.client.APIClient;
 import com.okex.open.api.config.APIConfiguration;
+import com.okex.open.api.enums.BinanceInternal;
 import com.okex.open.api.service.marketData.MarketDataAPIService;
+
+import java.util.List;
 
 public class MarketDataAPIServiceImpl implements MarketDataAPIService {
     private final APIClient client;
@@ -68,6 +72,34 @@ public class MarketDataAPIServiceImpl implements MarketDataAPIService {
         return this.client.executeSync(this.marketDataAPI.getTrades(instId,limit));
     }
 
+    //获取交易产品公共历史成交数据 Get trades history
+    @Override
+    public JSONObject getTradesHistory(String instId, String after, String before, String limit) {
+        return this.client.executeSync(this.marketDataAPI.getTradesHistory(instId, after, before, limit));
+    }
 
+    //获取平台24小时总成交量 Get total volume
+    @Override
+    public JSONObject getTotalVolume() {
+        return this.client.executeSync(this.marketDataAPI.getTotalVolume());
+    }
+
+    //Oracle 上链交易数据 Get Oracle
+    @Override
+    public JSONObject getOracle() {
+        return this.client.executeSync(this.marketDataAPI.getOracle());
+    }
+
+    ////获取法币汇率  Get exchange rate
+    @Override
+    public JSONObject getExchangeRate() {
+        return this.client.executeSync(this.marketDataAPI.getExchangeRate());
+    }
+
+    //获取指数成分数据  Get index components
+    @Override
+    public JSONObject getIndexComponents(String index) {
+        return this.client.executeSync(this.marketDataAPI.getIndexComponents(index));
+    }
 
 }

@@ -21,7 +21,7 @@ class Utils
 
     public  static  function request($requestPath, $params, $method, $cursor = false)
     {
-
+        print_r($params);
         if (strtoupper($method) == 'GET') {
             $requestPath .= $params ? '?'.http_build_query($params) : '';
             $params = [];
@@ -37,7 +37,9 @@ class Utils
 
         $sign = self::signature($timestamp, $method, $requestPath, $body, self::$apiSecret);
         $headers = self::getHeader(self::$apiKey, self::$paper,$sign, $timestamp, self::$passphrase, self::$textToSign);
-
+//        echo $url;
+//        echo "请求头";
+        print_r($headers);
 
         if($method == "POST") {
             curl_setopt($ch, CURLOPT_POST, true);
@@ -48,7 +50,7 @@ class Utils
 //        curl_setopt($ch, CURLOPT_TIMEOUT_MS,60);
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , TRUE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , FALSE);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLINFO_HEADER_OUT,true);
 
@@ -110,7 +112,7 @@ class Utils
 //        print_r("headerTotal:".$headerTotal."\n");
 //        print_r("bodySize:".$bodySize."\n");
 
-        $body = json_decode($body,true);
+//        $body = json_decode($body,true);
 
         return $body;
     }
@@ -152,16 +154,14 @@ class Utils
     public static function signature($timestamp, $method, $requestPath, $body, $secretKey)
     {
         $message = (string) $timestamp . strtoupper($method) . $requestPath . (string) $body;
-
         self::$textToSign = $message;
-
         return base64_encode(hash_hmac('sha256', $message, $secretKey, true));
     }
 
     public static function wsSignature($timestamp, $method, $requestPath, $body, $secretKey)
     {
         $message = (string) $timestamp . strtoupper($method) . $requestPath . (string) $body;
-
+        echo  $message;
         $ntime = self::getTimestamp();
         print_r($ntime." TEXT-TO-SIGN:$message\n");
 
@@ -178,7 +178,6 @@ class Utils
     {
         $time = microtime(true);
         $msec=round($time*1000);
-
         return $msec/1000;
     }
 

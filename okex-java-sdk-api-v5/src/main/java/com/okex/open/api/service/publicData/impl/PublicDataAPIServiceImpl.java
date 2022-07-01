@@ -65,8 +65,8 @@ public class PublicDataAPIServiceImpl implements PublicDataAPIService {
 
     //获取免息额度和币种折算率 Get Discount Rate And Interest-Free Quota
     @Override
-    public JSONObject getDiscountRateAndInterestFreeQuota(String ccy) {
-        return this.client.executeSync(this.api.getDiscountRateAndInterestFreeQuota(ccy));
+    public JSONObject getDiscountRateAndInterestFreeQuota(String ccy,String discountLv) {
+        return this.client.executeSync(this.api.getDiscountRateAndInterestFreeQuota(ccy,discountLv));
     }
 
     //获取系统时间 Get System Time
@@ -85,5 +85,35 @@ public class PublicDataAPIServiceImpl implements PublicDataAPIService {
     @Override
     public JSONObject getMarkPrice(String instType, String uly, String instId) {
         return this.client.executeSync(this.api.getMarkPrice(instType,uly,instId));
+    }
+
+    //获取合约衍生品仓位档位  Get Position Tiers
+    @Override
+    public JSONObject getTier(String instType, String uly, String instId, String tdMode, String tier) {
+        return this.client.executeSync(this.api.getTier(instType, uly, instId, tdMode, tier));
+    }
+
+    //获取杠杆利率和借币限额  Get Interest Rate and Loan Quota
+    @Override
+    public JSONObject getInterestRateLoanQuota() {
+        return this.client.executeSync(this.api.getInterestRateLoanQuota());
+    }
+
+    //获取衍生品标的指数  Get Underlying
+    @Override
+    public JSONObject getUnderlying(String instType) {
+        return this.client.executeSync(this.api.getUnderlying(instType));
+    }
+
+    //获取尊享借币杠杆利率和借币限额  Get Interest Rate and Loan Quota for VIP loans
+    @Override
+    public JSONObject getVipInterestRateLoanQuota() {
+        return this.client.executeSync(this.api.getVipInterestRateLoanQuota());
+    }
+
+    //张币转换
+    @Override
+    public JSONObject getConvertContractCoin(String type, String instId, String sz, String px, String unit) {
+        return this.client.executeSync(this.api.getConvertContractCoin(type,  instId,  sz,  px,  unit));
     }
 }

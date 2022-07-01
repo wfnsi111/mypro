@@ -1,6 +1,13 @@
 package com.okex.open.api.service.marketData;
 
 import com.alibaba.fastjson.JSONObject;
+import com.okex.open.api.bean.market.result.BinanceCandlestick;
+import com.okex.open.api.enums.BinanceInternal;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+
+import java.util.List;
 
 public interface MarketDataAPIService {
 
@@ -30,5 +37,20 @@ public interface MarketDataAPIService {
 
     //获取交易产品公共成交数据 Get Trades
     JSONObject getTrades(String instId,String limit);
+
+    //获取交易产品公共历史成交数据 Get trades history
+    JSONObject getTradesHistory(String instId,String after, String before,String limit);
+
+    //获取平台24小时总成交量 Get total volume
+    JSONObject getTotalVolume();
+
+    //Oracle 上链交易数据 Get Oracle
+    JSONObject getOracle();
+
+    //获取法币汇率  Get exchange rate
+    JSONObject getExchangeRate();
+
+    //获取指数成分数据  Get index components
+    JSONObject getIndexComponents(String index);
 
 }

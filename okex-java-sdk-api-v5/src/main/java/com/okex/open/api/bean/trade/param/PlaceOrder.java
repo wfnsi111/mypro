@@ -11,6 +11,46 @@ public class PlaceOrder {
     private String ordType;
     private String sz;
     private String px;
+    private String tgtCcy;
+
+    @Override
+    public String toString() {
+        return "PlaceOrder{" +
+                "instId='" + instId + '\'' +
+                ", tdMode='" + tdMode + '\'' +
+                ", ccy='" + ccy + '\'' +
+                ", clOrdId='" + clOrdId + '\'' +
+                ", tag='" + tag + '\'' +
+                ", side='" + side + '\'' +
+                ", posSide='" + posSide + '\'' +
+                ", ordType='" + ordType + '\'' +
+                ", sz='" + sz + '\'' +
+                ", px='" + px + '\'' +
+                ", tgtCcy='" + tgtCcy + '\'' +
+                ", banAmend=" + banAmend +
+                ", reduceOnly=" + reduceOnly +
+                '}';
+    }
+
+    public Boolean getBanAmend() {
+        return banAmend;
+    }
+
+    public void setBanAmend(Boolean banAmend) {
+        this.banAmend = banAmend;
+    }
+
+    private Boolean banAmend;
+
+
+
+    public String getTgtCcy() {
+        return tgtCcy;
+    }
+
+    public void setTgtCcy(String tgtCcy) {
+        this.tgtCcy = tgtCcy;
+    }
 
     public Boolean getReduceOnly() {
         return reduceOnly;
@@ -103,20 +143,5 @@ public class PlaceOrder {
     }
 
 
-    @Override
-    public String toString() {
-        return "PlaceOrder{" +
-                "instId='" + instId + '\'' +
-                ", tdMode='" + tdMode + '\'' +
-                ", ccy='" + ccy + '\'' +
-                ", clOrdId='" + clOrdId + '\'' +
-                ", tag='" + tag + '\'' +
-                ", side='" + side + '\'' +
-                ", posSide='" + posSide + '\'' +
-                ", ordType='" + ordType + '\'' +
-                ", sz='" + sz + '\'' +
-                ", px='" + px + '\'' +
-                ", reduceOnly='" + reduceOnly + '\'' +
-                '}';
-    }
+
 }

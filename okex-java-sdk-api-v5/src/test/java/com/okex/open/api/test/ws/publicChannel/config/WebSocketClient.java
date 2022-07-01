@@ -89,6 +89,7 @@ public class WebSocketClient {
             @Override
             public void onFailure(final WebSocket webSocket, final Throwable t, final Response response) {
                 System.out.println("Connection failed,Please reconnect!");
+                System.out.println("reason: "+t.getCause());
                 if (Objects.nonNull(service)) {
 
                     service.shutdown();
@@ -103,8 +104,9 @@ public class WebSocketClient {
 
                 //不进行解压
                 final String s = byteString;
+//                System.out.println("~~~~~~~~~~~~~~~~~~订阅后推送的数据："+s);
                 //判断是否是深度接口
-                if (s.contains("\"channel\":\"books\",")||s.contains("\"channel\":\"books-l2-tbt\",")) {
+                if (s.contains("\"channel\":\"books\",")||s.contains("\"channel\":\"books-l2-tbt\",")||s.contains("\"channel\":\"books50-l2-tbt\",")) {
                     //是深度接口
                     if (s.contains("snapshot")) {//记录下第一次的全量数据
                         JSONObject rst = JSONObject.fromObject(s);
@@ -130,7 +132,6 @@ public class WebSocketClient {
                         Optional<SpotOrderBook> newBook = parse(dataStr);
 
                         //获取增量的ask
-
                         List<SpotOrderBookItem> askList = newBook.get().getAsks();
                         //获取增量的bid
                         List<SpotOrderBookItem> bidList = newBook.get().getBids();
@@ -168,37 +169,10 @@ public class WebSocketClient {
                     //k线频道
                     System.out.println(DateFormatUtils.format(new Date(), DateUtils.TIME_STYLE_S4) + " Receive: " + s);
 
-              /*      JSONObject rst = JSONObject.fromObject(s);
-                    net.sf.json.JSONArray dataArr = net.sf.json.JSONArray.fromObject(rst.get("data"));
-
-                    Long pushTimestamp=null;
-                    Long localTimestamp = DateTime.now().getMillis();
-                    Long timing = null;
-
-
-                    if(s.contains("\"event\":\"subscribe\",")){
-
-                        System.out.println(DateFormatUtils.format(new Date(), DateUtils.TIME_STYLE_S4) + " Receive: " + s);
-
-                    }else {
-                        System.out.println("aaaaaaaaaaaaa"+dataArr);
-
-                        JSONArray dataCandle = JSONArray.parseArray(dataArr.get(0).toString());
-
-                        pushTimestamp= Long.parseLong(dataCandle.get(0).toString());
-
-                        timing =localTimestamp-pushTimestamp;
-
-                        System.out.println(DateFormatUtils.format(new Date(), DateUtils.TIME_STYLE_S4) +"("+timing+"ms)" + " Receive: " + s);
-
-                    }*/
-
-
                 } else if(s.contains("pong")){
                     System.out.println(DateFormatUtils.format(new Date(), DateUtils.TIME_STYLE_S4) + " Receive: " + s);
 
-                }
-                    else {
+                }else {
                     //不是深度 k线接口
                     JSONObject rst = JSONObject.fromObject(s);
                     net.sf.json.JSONArray dataArr = net.sf.json.JSONArray.fromObject(rst.get("data"));
@@ -220,9 +194,6 @@ public class WebSocketClient {
                     }else {
                         System.out.println(DateFormatUtils.format(new Date(), DateUtils.TIME_STYLE_S4) + " Receive: " + s);
                     }
-
-
-
 
 
                 }
@@ -270,10 +241,10 @@ public class WebSocketClient {
 
     //登录
     public static void login(String apiKey, String passPhrase, String secretKey) {
-        String timestamp = (Double.parseDouble(DateUtils.getEpochTime()) + 28800) + "";
+        String timestamp = DateTime.now().getMillis() / 1000+ "";
         String message = timestamp + "GET" + "/users/self/verify";
         sign = sha256_HMAC(message, secretKey);
-        String str = "{\"op\"" + ":" + "\"login\"" + "," + "\"args\"" + ":" + "[" + "\"" + apiKey + "\"" + "," + "\"" + passPhrase + "\"" + "," + "\"" + timestamp + "\"" + "," + "\"" + sign + "\"" + "]}";
+        String str = "{\"op\"" + ":" + "\"login\"" + "," + "\"args\"" + ":" + "[{" + "\"apiKey\"" + ":"+ "\"" + apiKey + "\"" + "," + "\"passphrase\"" + ":" + "\"" + passPhrase + "\"" + ","+ "\"timestamp\"" + ":"  + "\"" + timestamp + "\"" + ","+ "\"sign\"" + ":"  + "\"" + sign + "\"" + "}]}";
         sendMessage(str);
     }
 

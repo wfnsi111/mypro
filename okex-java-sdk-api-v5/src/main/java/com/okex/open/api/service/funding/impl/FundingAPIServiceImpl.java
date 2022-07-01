@@ -17,17 +17,16 @@ public class FundingAPIServiceImpl implements FundingAPIService {
         this.api = client.createService(FundingAPI.class);
     }
 
-    //获取充值地址信息 Get Deposit Address
+    //获取币种列表 Get Currencies
     @Override
-    public JSONObject getDepositAddress(String ccy) {
-        return this.client.executeSync(this.api.getDepositAddress(ccy));
+    public JSONObject getCurrencies() {
+        return this.client.executeSync(this.api.getCurrencies());
     }
 
-    //获取资金账户余额信息 Get Balance
-
+    //获取资金账户余额 Get Balance
     @Override
-    public JSONObject getBalance() {
-        return this.client.executeSync(this.api.getBalance());
+    public JSONObject getBalance(String ccy) {
+        return this.client.executeSync(this.api.getBalance(ccy));
     }
 
     //资金划转  Funds Transfer
@@ -36,29 +35,34 @@ public class FundingAPIServiceImpl implements FundingAPIService {
         return this.client.executeSync(this.api.fundsTransfer(JSONObject.parseObject(JSON.toJSONString(fundsTransfer))));
     }
 
+    //资金流水查询 Asset Bills Details
+    @Override
+    public JSONObject assetBillsDetails(String ccy, String type, String clientId,String after, String before, String limit) {
+        return this.client.executeSync(this.api.assetBillsDetails(ccy,type,clientId,after,before,limit));
+    }
+
+    //获取充值地址信息 Get Deposit Address
+    @Override
+    public JSONObject getDepositAddress(String ccy) {
+        return this.client.executeSync(this.api.getDepositAddress(ccy));
+    }
+
+    //获取充值记录 Get Deposit History
+    @Override
+    public JSONObject getDepositHistory(String ccy, String txId, String state, String after, String before, String limit,String depId) {
+        return this.client.executeSync(this.api.getDepositHistory(ccy,txId,state,after,before,limit,depId));
+    }
+
     //提币 Withdrawal
     @Override
     public JSONObject Withdrawal(Withdrawal withdrawal) {
         return this.client.executeSync(this.api.Withdrawal(JSONObject.parseObject(JSON.toJSONString(withdrawal))));
     }
 
-    //充值记录 Get Deposit History
+    //获取提币记录 Get Withdrawal History
     @Override
-    public JSONObject getDepositHistory(String ccy, String state, String after, String before, String limit) {
-        return this.client.executeSync(this.api.getDepositHistory(ccy,state,after,before,limit));
-    }
-
-    //提币记录 Get Withdrawal History
-
-    @Override
-    public JSONObject getWithdrawalHistory(String ccy, String state, String after, String before, String limit) {
-        return this.client.executeSync(this.api.getWithdrawalHistory(ccy,state,after,before,limit));
-    }
-
-    //获取币种列表 Get Currencies
-    @Override
-    public JSONObject getCurrencies() {
-        return this.client.executeSync(this.api.getCurrencies());
+    public JSONObject getWithdrawalHistory(String ccy, String clientId, String txId, String state, String after, String before, String limit,String wdId) {
+        return this.client.executeSync(this.api.getWithdrawalHistory(ccy,clientId,txId,state,after,before,limit,wdId));
     }
 
     //余币宝申购/赎回 PiggyBank Purchase/Redemption
@@ -67,9 +71,70 @@ public class FundingAPIServiceImpl implements FundingAPIService {
         return this.client.executeSync(this.api.piggyBankPurchaseRedemption(JSONObject.parseObject(JSON.toJSONString(piggyBankPurchaseRedemption))));
     }
 
-    //资金流水查询 Asset Bills Details
+    //获取余币宝余额
     @Override
-    public JSONObject assetBillsDetails(String ccy, String type, String after, String before, String limit) {
-        return this.client.executeSync(this.api.assetBillsDetails(ccy,type,after,before,limit));
+    public JSONObject piggyBalance(String ccy) {
+        return this.client.executeSync(this.api.piggyBalance(ccy));
+    }
+
+    //闪电网络充币 Deposit Lightning
+    @Override
+    public JSONObject depositLightning(String ccy, String amt, String to) {
+        return this.client.executeSync(this.api.depositLightning(ccy,amt,to));
+    }
+
+    //闪电网络提币 Withdrawal Lightning
+    @Override
+    public JSONObject withdrawalLightning(Withdrawal withdrawal) {
+        return this.client.executeSync(this.api.withdrawalLightning(JSONObject.parseObject(JSON.toJSONString(withdrawal))));
+    }
+
+    //获取资金划转状态 Transfer State
+    @Override
+    public JSONObject transferState(String transId,String clientId, String type) {
+        return this.client.executeSync(this.api.transferState(transId,clientId,type));
+    }
+
+    //获取账户资产估值 Get account asset valuation
+    @Override
+    public JSONObject assetValuation(String ccy) {
+        return this.client.executeSync(this.api.assetValuation(ccy));
+    }
+
+    //设置余币宝借贷利率 Set lending rate
+    @Override
+    public JSONObject SetLendingRate(SetLendingRate setLendingRate) {
+        return this.client.executeSync(this.api.SetLendingRate(JSONObject.parseObject(JSON.toJSONString(setLendingRate))));
+    }
+
+    //获取余币宝出借明细  Get lending history
+    @Override
+    public JSONObject lendingHistory(String ccy, String after, String before, String limit) {
+        return this.client.executeSync(this.api.lendingHistory(ccy,after,before,limit));
+    }
+
+    //获取市场借贷信息（公共） Get public borrow info (public)
+    @Override
+    public JSONObject lendingRateSummary(String ccy) {
+        return this.client.executeSync(this.api.lendingRateSummary(ccy));
+    }
+
+    //获取市场借贷历史（公共）  Get public borrow history (public)
+    @Override
+    public JSONObject lendingRateHistory(String ccy, String after, String before, String limit) {
+        return this.client.executeSync(this.api.lendingRateHistory(ccy,after,before,limit));
+    }
+
+    //小额资产兑换
+    @Override
+    public JSONObject convertDustAssets(ConvertDustAssets convertDustAssets) {
+        return this.client.executeSync(this.api.ConvertDustAssets(JSONObject.parseObject(JSON.toJSONString(convertDustAssets))));
+    }
+
+    //撤销提币
+    @Override
+    public JSONObject cancelWithdrawal(Withdrawal cancelWithdrawal) {
+        return this.client.executeSync(this.api.cancelWithdrawal(JSONObject.parseObject(JSON.toJSONString(cancelWithdrawal))));
+
     }
 }

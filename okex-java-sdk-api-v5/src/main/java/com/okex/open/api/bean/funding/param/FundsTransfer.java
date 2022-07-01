@@ -7,8 +7,24 @@ public class FundsTransfer {
     private String from;
     private String to;
     private String subAcct;
-    private String instId;
-    private String toInstId;
+    private String clientId;
+    private Boolean loanTrans;
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public Boolean getLoanTrans() {
+        return loanTrans;
+    }
+
+    public void setLoanTrans(Boolean loanTrans) {
+        this.loanTrans = loanTrans;
+    }
 
     public String getCcy() {
         return ccy;
@@ -58,21 +74,7 @@ public class FundsTransfer {
         this.subAcct = subAcct;
     }
 
-    public String getInstId() {
-        return instId;
-    }
 
-    public void setInstId(String instId) {
-        this.instId = instId;
-    }
-
-    public String getToInstId() {
-        return toInstId;
-    }
-
-    public void setToInstId(String toInstId) {
-        this.toInstId = toInstId;
-    }
 
     @Override
     public String toString() {
@@ -83,8 +85,8 @@ public class FundsTransfer {
                 ", from='" + from + '\'' +
                 ", to='" + to + '\'' +
                 ", subAcct='" + subAcct + '\'' +
-                ", instId='" + instId + '\'' +
-                ", toInstId='" + toInstId + '\'' +
+                ", instId='" + clientId + '\'' +
+                ", loanTrans=" + loanTrans +
                 '}';
     }
 }

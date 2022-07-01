@@ -2,11 +2,63 @@ package com.okex.open.api.bean.funding.param;
 
 public class Withdrawal {
     private String ccy;
+    private String chain;
     private String amt;
     private String dest;
     private String toAddr;
-    private String pwd;
+    private String clientId;
+    private String wdId;
+
+    @Override
+    public String toString() {
+        return "Withdrawal{" +
+                "ccy='" + ccy + '\'' +
+                ", chain='" + chain + '\'' +
+                ", amt='" + amt + '\'' +
+                ", dest='" + dest + '\'' +
+                ", toAddr='" + toAddr + '\'' +
+                ", clientId='" + clientId + '\'' +
+                ", wdId='" + wdId + '\'' +
+                ", invoice='" + invoice + '\'' +
+                ", memo='" + memo + '\'' +
+                ", fee='" + fee + '\'' +
+                '}';
+    }
+
+    public String getWdId() {
+        return wdId;
+    }
+
+    public void setWdId(String wdId) {
+        this.wdId = wdId;
+    }
+
+    private String invoice;
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    private String memo;
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
     private String fee;
+
+
+
+
+
 
     public String getCcy() {
         return ccy;
@@ -14,6 +66,14 @@ public class Withdrawal {
 
     public void setCcy(String ccy) {
         this.ccy = ccy;
+    }
+
+    public String getChain() {
+        return chain;
+    }
+
+    public void setChain(String chain) {
+        this.chain = chain;
     }
 
     public String getAmt() {
@@ -40,14 +100,6 @@ public class Withdrawal {
         this.toAddr = toAddr;
     }
 
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
     public String getFee() {
         return fee;
     }
@@ -56,15 +108,11 @@ public class Withdrawal {
         this.fee = fee;
     }
 
-    @Override
-    public String toString() {
-        return "Withdrawal{" +
-                "ccy='" + ccy + '\'' +
-                ", amt='" + amt + '\'' +
-                ", dest='" + dest + '\'' +
-                ", toAddr='" + toAddr + '\'' +
-                ", pwd='" + pwd + '\'' +
-                ", fee='" + fee + '\'' +
-                '}';
+    public String getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
     }
 }

@@ -90,7 +90,7 @@ class PublicDataAPI extends Utils
         return $this->request('/api/v5/public/estimated-price',$params, 'GET');
     }
 
-    public function getQuota($ccy)
+    public function getQuota($ccy='')
     {
         $params = [
             'ccy' => $ccy,
@@ -99,7 +99,7 @@ class PublicDataAPI extends Utils
         return $this->request('/api/v5/public/discount-rate-interest-free-quota',$params, 'GET');
     }
 
-    public function getTime($ccy)
+    public function getTime()
     {
         return $this->request('/api/v5/public/time','', 'GET');
     }
@@ -131,5 +131,41 @@ class PublicDataAPI extends Utils
         ];
 
         return $this->request('/api/v5/public/mark-price',$params, 'GET');
+    }
+
+    public function getTier($instType,$uly='',$instId='',$tdMode,$tier='')
+    {
+        $params = [
+            'instType' => $instType,
+            'uly' => $uly,
+            'instId' => $instId,
+            'tdMode' => $tdMode,
+            'tier' => $tier,
+        ];
+
+        return $this->request('/api/v5/public/tier',$params, 'GET');
+    }
+
+    public function getInterestRateLoanQuota()
+    {
+        $params = [];
+
+        return $this->request('/api/v5/public/interest-rate-loan-quota',$params, 'GET');
+    }
+
+    public function vipInterestRateLoanQuota()
+    {
+        $params = [];
+
+        return $this->request('/api/v5/public/vip-interest-rate-loan-quota',$params, 'GET');
+    }
+
+    public function getUnderlying($instType)
+    {
+        $params = [
+            'instType' => $instType,
+        ];
+
+        return $this->request('/api/v5/public/underlying',$params, 'GET');
     }
 }

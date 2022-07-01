@@ -1,10 +1,14 @@
 package com.okex.open.api.service.marketData.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.okex.open.api.bean.market.result.BinanceCandlestick;
+import com.okex.open.api.enums.BinanceInternal;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+
+import java.util.List;
 
 interface MarketDataAPI {
 
@@ -41,8 +45,32 @@ interface MarketDataAPI {
     @GET("/api/v5/market/mark-price-candles")
     Call<JSONObject> getMarkPriceCandlesticks(@Query("instId") String instId,@Query("after")String after,@Query("before")String before,@Query("bar")String bar,@Query("limit")String limit);
 
-
     //获取交易产品公共成交数据 Get Trades
     @GET("/api/v5/market/trades")
     Call<JSONObject> getTrades(@Query("instId") String instId,@Query("limit") String limit);
+
+    //获取交易产品公共历史成交数据 Get trades history
+    @GET("/api/v5/market/history-trades")
+    Call<JSONObject> getTradesHistory(@Query("instId") String instId,@Query("after") String after,@Query("before") String before,@Query("limit") String limit);
+
+    //获取平台24小时总成交量 Get total volume
+    @GET("/api/v5/market/platform-24-volume")
+    Call<JSONObject> getTotalVolume();
+
+    //Oracle 上链交易数据 Get Oracle
+    @GET("/api/v5/market/open-oracle")
+    Call<JSONObject> getOracle();
+
+    //获取法币汇率  Get exchange rate
+    @GET("/api/v5/market/exchange-rate")
+    Call<JSONObject> getExchangeRate();
+
+    //获取指数成分数据  Get index components
+    @GET("/api/v5/market/index-components")
+    Call<JSONObject> getIndexComponents(@Query("index") String index);
+
+
+
+
+
 }
